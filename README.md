@@ -16,6 +16,106 @@ Pagamento e review existem no nível do pedido inteiro, então esses valores se 
 
 ---
 
+## Modelo de Alto Nível
+```mermaid
+erDiagram
+  fact_orders {
+    bigserial order_item_sk PK
+    int customer_sk FK
+    int seller_sk FK
+    int product_sk FK
+    int purchase_date_sk FK
+    int delivered_date_sk FK
+    int estimated_date_sk FK
+    int payment_type_sk FK
+    int order_status_sk FK
+    int customer_geo_sk FK
+    int seller_geo_sk FK
+    varchar order_id
+    smallint order_item_id
+    numeric price
+    numeric freight_value
+    numeric total_item_value
+    smallint review_score
+    smallint payment_installments
+    numeric payment_value
+  }
+  dim_customer {
+    serial customer_sk PK
+    varchar customer_id
+    varchar customer_unique_id
+    varchar zip_code_prefix
+    varchar city
+    char state
+  }
+  dim_seller {
+    serial seller_sk PK
+    varchar seller_id
+    varchar zip_code_prefix
+    varchar city
+    char state
+  }
+  dim_product {
+    serial product_sk PK
+    varchar product_id
+    varchar category_name_portuguese
+    varchar category_name_english
+    smallint photos_qty
+    integer weight_g
+    smallint length_cm
+    smallint height_cm
+    smallint width_cm
+  }
+  dim_date {
+    serial date_sk PK
+    date full_date
+    smallint day_of_month
+    smallint day_of_week
+    varchar day_name
+    smallint week_of_year
+    smallint month_number
+    varchar month_name
+    smallint quarter
+    smallint year
+    boolean is_weekend
+    smallint semester
+  }
+  dim_geolocation {
+    serial geolocation_sk PK
+    varchar zip_code_prefix
+    varchar city
+    char state
+    varchar region
+    numeric lat
+    numeric lng
+  }
+  dim_payment_type {
+    serial payment_type_sk PK
+    varchar payment_type_code
+    varchar payment_type_label
+  }
+  dim_order_status {
+    serial order_status_sk PK
+    varchar status_code
+    varchar status_label
+    boolean is_final_state
+  }
+
+  fact_orders }o--|| dim_customer : "customer_sk"
+  fact_orders }o--|| dim_seller : "seller_sk"
+  fact_orders }o--|| dim_product : "product_sk"
+  fact_orders }o--|| dim_date : "purchase_date_sk"
+  fact_orders }o--o| dim_date : "delivered_date_sk"
+  fact_orders }o--o| dim_date : "estimated_date_sk"
+  fact_orders }o--o| dim_geolocation : "customer_geo_sk"
+  fact_orders }o--o| dim_geolocation : "seller_geo_sk"
+  fact_orders }o--o| dim_payment_type : "payment_type_sk"
+  fact_orders }o--|| dim_order_status : "order_status_sk"
+
+```
+
+--- 
+
 ## Tabelas
 
 **Fato**

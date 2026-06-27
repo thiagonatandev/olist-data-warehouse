@@ -243,6 +243,7 @@ dim_order_status
 ### Modelo Relacional Fisico
 <img width="5697" height="3143" alt="diagram_mermaid" src="https://github.com/user-attachments/assets/77ef3b33-bf69-491d-9ffe-a12f16a73df0" />
 
+### (Modelo em tabela)[https://drive.google.com/file/d/1d0TRkJwC-7mZ5y0NSanN6gBWi0FgPy1k/view?usp=sharing]
 
 ---
 
